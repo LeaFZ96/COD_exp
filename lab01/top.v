@@ -1,4 +1,5 @@
 `timescale 1ns / 1ps
+`include "alu.v"
 
 module top(
   input signed  [31:0] a,
