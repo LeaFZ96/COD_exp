@@ -9,13 +9,13 @@ module alu(
 
 reg [31:0] temp;
 
-parameter A_NOP = 5'h00;  //空运算
-parameter	A_ADD = 5'h01;	//符号加
-parameter	A_SUB = 5'h02;	//符号减
-parameter	A_AND = 5'h03;	//与
-parameter	A_OR = 5'h04;	//或
-parameter	A_XOR = 5'h05;	//异或
-parameter	A_NOR = 5'h06;	//或非
+parameter A_NOP = 5'h00;  //������
+parameter	A_ADD = 5'h01;	//���ż�
+parameter	A_SUB = 5'h02;	//���ż�
+parameter	A_AND = 5'h03;	//��
+parameter	A_OR = 5'h04;	//��
+parameter	A_XOR = 5'h05;	//���
+parameter	A_NOR = 5'h06;	//���
 
 always@(*) begin
   case (alu_op)

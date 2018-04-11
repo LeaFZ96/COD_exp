@@ -26,14 +26,22 @@ always@(posedge clk or negedge rst_n) begin
 		rwe <= 0;
 		wEna <= 0;
 		num <= 0;
-		a <= 2;
 	end
 	else if(initr < 2) begin
 		initr <= initr + 1;
 		wEna <= 1;
 		rradd <= rradd + 1;
 		res <= rrout;
-		num <= num + 2;
+	end
+	else if(initr == 2) begin
+		initr <= initr + 1;
+		rradd <= 0;
+		rwadd <= 1;
+		wAddr <= 1;
+		rwe <= 0;
+		wEna <= 0;
+		num <= 0;
+		a <= 2;
 	end
 	else if(num == 0) begin
 		rwe <= 0;
@@ -51,12 +59,16 @@ always@(posedge clk or negedge rst_n) begin
 	end
 	else if(num == 3) begin
 		num <= num + 1;
-		b <= rrout;
 	end
 	else if(num == 4) begin
+		num <= num + 1;
+		b <= rrout;
+	end
+	else if(num == 5) begin
 		rwe <= 1;
 		wEna <= 1;
 		num <= 0;
+		res <= c;
 		rwadd <= rwadd + 1;
 		wAddr <= wAddr + 1;
 	end
