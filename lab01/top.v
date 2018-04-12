@@ -14,4 +14,4 @@ alu alu2(b, temp1, 5'h1, temp2);
 alu alu3(temp1, temp2, 5'h1, temp3);
 alu alu4(temp2, temp3, 5'h1, out);
 
-endmodule // top
+endmodule

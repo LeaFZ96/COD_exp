@@ -4,7 +4,7 @@ module alu(
     input signed [31:0] alu_a,
     input signed [31:0] alu_b,
     input        [4:0]  alu_op,
-    output reg   [31:0] alu_out
+    output reg signed  [31:0] alu_out
 );
 
 parameter A_NOP = 5'h00;  //空运算
