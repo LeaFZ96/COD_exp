@@ -4,10 +4,8 @@ module alu(
     input signed [31:0] alu_a,
     input signed [31:0] alu_b,
     input        [4:0]  alu_op,
-    output       [31:0] alu_out
+    output reg signed [31:0] alu_out
 );
-
-reg [31:0] temp;
 
 parameter A_NOP = 5'h00;  //空运算
 parameter	A_ADD = 5'h01;	//符号加
@@ -19,17 +17,15 @@ parameter	A_NOR = 5'h06;	//或非
 
 always@(*) begin
   case (alu_op)
-    A_NOP: temp = alu_a;
-    A_ADD: temp = alu_a + alu_b;
-    A_SUB: temp = alu_a - alu_b;
-    A_AND: temp = alu_a & alu_b;
-    A_OR: temp = alu_a | alu_b;
-    A_XOR: temp = alu_a ^ alu_b;
-    A_NOR: temp = ~(alu_a | alu_b);
-    default: temp = alu_a;
+    A_NOP: alu_out = alu_a;
+    A_ADD: alu_out = alu_a + alu_b;
+    A_SUB: alu_out = alu_a - alu_b;
+    A_AND: alu_out = alu_a & alu_b;
+    A_OR: alu_out = alu_a | alu_b;
+    A_XOR: alu_out = alu_a ^ alu_b;
+    A_NOR: alu_out = ~(alu_a | alu_b);
+    default: alu_out = alu_a;
   endcase
 end
-
-assign alu_out = temp;
 
 endmodule
