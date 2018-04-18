@@ -52,19 +52,16 @@ always@(posedge clk or negedge rst_n) begin
 	else if(num == 1) begin
 		a <= rrout;
 		num <= num + 1;
+		rradd <= rradd + 1;
 	end
 	else if(num == 2) begin
 		num <= num + 1;
-		rradd <= rradd + 1;
 	end
 	else if(num == 3) begin
 		num <= num + 1;
-	end
-	else if(num == 4) begin
-		num <= num + 1;
 		b <= rrout;
 	end
-	else if(num == 5) begin
+	else if(num == 4) begin
 		rwe <= 1;
 		wEna <= 1;
 		num <= 0;
