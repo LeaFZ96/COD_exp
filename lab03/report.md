@@ -50,8 +50,6 @@
    - 定义初始 Regfile 写入状态转换变量 `initr` ，初始为零
      - `initr < 2` Regfile 写入使能 wEna 置一，从 RAM 读取数据写入 Regfile，RAM 读取地址加一
      - `initr == 2` 将各个变量重新初始化，initr 加一
-
-
    - 定义状态转换标志变量 `num` ，其有 5 个状态：
      - `num == 0` RAM 和 Regfile 写入使能 rwe, wEna 置零
      - `num == 1` 从 RAM 读取数据赋值给 ALU 操作数 a，并将读地址加一

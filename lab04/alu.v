@@ -17,7 +17,7 @@ parameter	A_NOR = 5'h06;	//或非
 
 always@(*) begin
   case (alu_op)
-    A_NOP: alu_out = 0;
+    A_NOP: alu_out = 32'h0;
     A_ADD: alu_out = alu_a + alu_b;
     A_SUB: alu_out = alu_a - alu_b;
     A_AND: alu_out = alu_a & alu_b;

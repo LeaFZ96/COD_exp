@@ -69,6 +69,10 @@ always@(posedge clk or negedge rst_n) begin
 		num <= 0;
 		res <= 10;
 		rwd <= 0;
+		a <= 0;
+		b <= 0;
+		alu_op <= 0;
+		radd_reg <= 0;
 	end
 	else if (curr_state == idle) begin
 		if (num < 13) begin
@@ -99,7 +103,6 @@ always@(posedge clk or negedge rst_n) begin
 	end
 	else if (curr_state == read0) begin
 		alu_op <= rrout;
-		
 		rradd <= rradd + 1;
 		wAddr <= 0;
 		wEna <= 1;
