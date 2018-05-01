@@ -11,7 +11,7 @@ module Control(
 	output reg RegDst,
 	output reg RegWrite,
 	output reg [2:0] ALUControl
-)
+);
 
 always@(opcode or funct) begin
 	case(opcode)
@@ -43,7 +43,7 @@ always@(opcode or funct) begin
 			MemtoReg = 0;
 			MemWrite = 0;
 			ALUSrc = 1;
-			RegDst = 1;
+			RegDst = 0;
 			RegWrite = 1;
 			Branch = 0;
 			ALUControl = 3'b001;
@@ -53,7 +53,7 @@ always@(opcode or funct) begin
 			MemtoReg = 1;
 			MemWrite = 0;
 			ALUSrc = 1;
-			RegDst = 1;
+			RegDst = 0;
 			RegWrite = 1;
 			Branch = 0;
 			ALUControl = 3'b001;

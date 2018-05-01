@@ -6,12 +6,14 @@ module PC_JMUX(
     input [27:0] ins,
     input [31:0] PC_BMUX,
     output reg [31:0] PC_out
-)
+);
+
+reg [27:0] temp;
 
 always@(*) begin
     if (Jump) begin
-        ins = ins << 2;
-        PC_out[27:0] = ins;
+        temp = ins;
+        PC_out[27:0] = temp;
         PC_out[31:28] = PCPlus4;
     end
     else

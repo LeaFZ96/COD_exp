@@ -4,8 +4,8 @@ module MA_MUX(
     input MemtoReg,
     input [31:0] ALUResult,
     input [31:0] ReadData,
-    output reg [31:0] Result
-)
+    output [31:0] Result
+);
 
 assign Result = MemtoReg? ReadData: ALUResult;
 

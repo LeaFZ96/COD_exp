@@ -8,11 +8,11 @@ module ALU(
     output reg signed [31:0] alu_out
 );
 
-parameter A_NOP = 2'h00;  //空运算
-parameter	A_ADD = 2'h01;	//符号加
-parameter	A_SUB = 2'h02;	//符号减
-parameter	A_AND = 2'h03;	//与
-parameter	A_OR = 2'h04;	//或
+parameter A_NOP = 2'h00;  //空运�
+parameter	A_ADD = 2'h01;	//符号�
+parameter	A_SUB = 2'h02;	//符号�
+parameter	A_AND = 2'h03;	//�
+parameter	A_OR = 2'h04;	//�
 parameter	A_XOR = 2'h05;	//异或
 parameter	A_NOR = 2'h06;	//或非
 
@@ -27,7 +27,7 @@ always@(*) begin
     A_NOR: alu_out = ~(alu_a | alu_b);
     default: alu_out = alu_a;
   endcase
-  if (alu_out == 0)
+  if (alu_out > 0)
     Zero = 1;
   else
     Zero = 0;

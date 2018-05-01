@@ -3,8 +3,8 @@
 module BA_AND(
     input Branch,
     input Zero,
-    output reg PCSrc
-)
+    output PCSrc
+);
 
 assign PCSrc = Branch & Zero;
 
