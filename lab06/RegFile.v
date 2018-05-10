@@ -23,7 +23,7 @@ always@(posedge clk or negedge rst_n) begin
 		for(i = 0; i < 32; i = i + 1)
 			data[i] <= 0;	
 	end
-	else if(RegWrite == 1'b1)
+	else if(RegWrite)
 		data[wAddr] <= wDin;
 end
 

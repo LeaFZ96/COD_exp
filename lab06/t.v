@@ -4,15 +4,15 @@
 // Company: 
 // Engineer:
 //
-// Create Date:   18:35:04 05/09/2018
-// Design Name:   top
-// Module Name:   Y:/Projects/COD/temp/lab06/test.v
+// Create Date:   20:18:29 05/09/2018
+// Design Name:   top2
+// Module Name:   Y:/Projects/COD/temp/lab06/t.v
 // Project Name:  lab06
 // Target Device:  
 // Tool versions:  
 // Description: 
 //
-// Verilog Test Fixture created by ISE for module: top
+// Verilog Test Fixture created by ISE for module: top2
 //
 // Dependencies:
 // 
@@ -22,14 +22,14 @@
 // 
 ////////////////////////////////////////////////////////////////////////////////
 
-module test;
+module t;
 
 	// Inputs
 	reg clk;
 	reg rst_n;
 
 	// Instantiate the Unit Under Test (UUT)
-	top uut (
+	top2 uut (
 		.clk(clk), 
 		.rst_n(rst_n)
 	);
