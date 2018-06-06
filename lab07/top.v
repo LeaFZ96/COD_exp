@@ -2,7 +2,9 @@
 
 module top(
 	input clk,
-	input rst_n
+	input rst_n,
+	input break,
+	input continue
 );
 
 wire [31:0] Instr_IF, Instr_ID;
@@ -23,6 +25,7 @@ wire [3:0] ALUControl_ID, ALUControl_EX;
 wire [2:0] BranchSt_ID, BranchSt_EX;
 wire [1:0] ForwardA, ForwardB;
 wire [1:0] PCSrc;
+wire [1:0] ALUOF_ID, ALUOF_EX;
 
 wire flush, Stall_PC, Stall_FD, Jump, JumpR;
 
@@ -34,20 +37,25 @@ wire ALUSrc_ID, ALUSrc_EX;
 wire RegDst_ID, RegDst_EX;
 wire RegWrite_ID, RegWrite_EX, RegWrite_MEM, RegWrite_WB;
 wire Zero_EX, Zero_MEM, B_Zero;
+wire Overflow_EX, Overflow_MEM, Overflow_WB;
 
 
 Hazard hazard(
     .RegWrite_EM(RegWrite_MEM),
     .RegWrite_MW(RegWrite_WB),
     .MemRead_DE(MemRead_EX),
+	.Break(break),
+	.Overflow(Overflow_WB),
     .WriteReg_EM(WriteReg_MEM),
     .WriteReg_MW(WriteReg_WB),
     .RT_DE(RT_EX),
     .RS_DE(RS_EX),
     .RT_FD(RT_ID),
     .RS_FD(RS_ID),
+	.PCSrc(PCSrc)
     .ForwardA(ForwardA),
     .ForwardB(ForwardB),
+	.flush(flush),
     .Stall_PC(Stall_PC),
     .Stall_FD(Stall_FD)
 );
@@ -57,6 +65,7 @@ PC Pc(
 	.clk(clk), 
 	.rst_n(rst_n),
 	.Stall(Stall_PC),
+	.Continue(continue),
 	.PCSrc(PCSrc),
 	.PCPlus4(PCPlus4_IF),
 	.PCJOut(PCJOut),
@@ -91,6 +100,7 @@ Control Con(
 	.ALUSrc(ALUSrc_ID), 
 	.RegDst(RegDst_ID), 
 	.RegWrite(RegWrite_ID), 
+	.ALUOF(ALUOF_ID),
 	.BranchSt(BranchSt_ID),
 	.ALUControl(ALUControl_ID)
 );
@@ -130,6 +140,7 @@ ID_EX DE(
 	.ALUSrc_ID(ALUSrc_ID),
 	.RegDst_ID(RegDst_ID),
 	.RegWrite_ID(RegWrite_ID),
+	.ALUOF_ID(ALUOF_ID),
 	.BranchSt_ID(BranchSt_ID),
 	.ALUControl_ID(ALUControl_ID),
 	.PCPlus4_ID(PCPlus4_ID),
@@ -145,6 +156,7 @@ ID_EX DE(
 	.Branch_EX(Branch_EX),
 	.ALUSrc_EX(ALUSrc_EX),
 	.RegDst_EX(RegDst_EX),
+	.ALUOF_EX(ALUOF_EX),
 	.RegWrite_EX(RegWrite_EX),
 	.BranchSt_EX(BranchSt_EX),
 	.ALUControl_EX(ALUControl_EX),
@@ -185,6 +197,8 @@ ALU alu(
 	.alu_a(ALUSrcA),
 	.alu_b(ALUSrcB),
 	.alu_op(ALUControl_EX),
+	.ins(ALUOF_EX),
+	.Overflow(Overflow_EX),
 	.Zero(Zero_EX),
 	.alu_out(ALUOut_EX)
 );
@@ -208,6 +222,7 @@ EX_MEM EM(
 	.ReadRt_EX(ReadRt_EX),
 	.PCBranch_EX(PCBOut_EX),
 	.WriteReg_EX(WriteReg_EX),
+	.Overflow_EX(Overflow_EX),
 	.MemtoReg_MEM(MemtoReg_MEM),
 	.MemWrite_MEM(MemWrite_MEM),
 	.MemRead_MEM(MemRead_MEM),
@@ -218,7 +233,8 @@ EX_MEM EM(
 	.ALUOut_MEM(ALUOut_MEM),
 	.ReadRt_MEM(ReadRt_MEM),
 	.PCBranch_MEM(PCBOut_MEM),
-	.WriteReg_MEM(WriteReg_MEM)
+	.WriteReg_MEM(WriteReg_MEM),
+	.Overflow_MEM(Overflow_MEM)
 );
 
 //  MEM
@@ -234,7 +250,7 @@ BranchSec BS(
 	.Branch(Branch_MEM),
 	.ALUOut(ALUOut_MEM),
 	.BranchSt(BranchSt_MEM),
-	.PCSrc(PCsrc),
+	.PCSrc(PCSrc),
 );
 
 MEM_WB MW(
@@ -245,10 +261,12 @@ MEM_WB MW(
 	.ReadData_MEM(ReadData_MEM),
 	.ALUOut_MEM(ALUOut_MEM),
 	.WriteReg_MEM(WriteReg_MEM),
+	.Overflow_MEM(Overflow_MEM),
 	.RegWrite_WB(RegWrite_WB),
 	.MemtoReg_WB(MemtoReg_WB),
 	.ReadData_WB(ReadData_WB),
 	.ALUOut_WB(ALUOut_WB),
+	.Overflow_WB(Overflow_WB),
 	.WriteReg_WB(WriteReg_WB)
 );
 

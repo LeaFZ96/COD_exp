@@ -13,6 +13,7 @@ module Control(
 	output reg ALUSrc,
 	output reg RegDst,
 	output reg RegWrite,
+	output reg [1:0] ALUOF,
 	output reg [2:0] BranchSt,
 	output reg [3:0] ALUControl
 );
@@ -28,15 +29,22 @@ always@(opcode or funct) begin
 	ALUSrc = 0;
 	RegDst = 0;
 	RegWrite = 0;
+	ALUOF = 0;
 	ALUControl = 0;
 	case(opcode)
 		6'h0: begin
 			RegDst = 1;
 			RegWrite = 1；
 			case(funct)
-				6'h20: ALUControl = 4'h1;	// add
+				6'h20: begin				// add
+					ALUControl = 4'h1;
+					ALUOF = 2'b01;
+				end
 				6'h21: ALUControl = 4'h1;	// addu
-				6'h22: ALUControl = 4'h2;	// sub
+				6'h22: begin				// sub
+					ALUControl = 4'h2;
+					ALUOF = 2'b10;
+				end
 				6'h23: ALUControl = 4'h2;	// subu
 				6'h24: ALUControl = 4'h3;	// and
 				6'h25: ALUControl = 4'h4;	// or
@@ -53,6 +61,7 @@ always@(opcode or funct) begin
 		end
 		6'h8: begin		// addi
 			ALUSrc = 1;
+			ALUOF = 2'b01;
 			RegWrite = 1;
 			ALUControl = 4'h1;
 		end 
