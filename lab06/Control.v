@@ -47,7 +47,7 @@ end
 always@(*) begin
     case(curr_state)
         S0:
-				next_state = S1;
+		    next_state = S1;
         S1:
             if (op == 6'h23 || op == 6'h2b)
                 next_state = S2;
@@ -68,16 +68,16 @@ always@(*) begin
                 next_state = S5;
         S3:
             next_state = S4;
-		  S5:
-			   next_state = S12;
+		S5:
+			next_state = S12;
         S6:
             next_state = S7;
-		  S8:
-				next_state = S13;
+		S8:
+		    next_state = S13;
         S9:
             next_state = S10;
-		  S11:
-				next_state = S14;
+		S11:
+			next_state = S14;
         default:
             next_state = S0;
     endcase
