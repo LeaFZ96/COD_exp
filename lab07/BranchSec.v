@@ -2,15 +2,18 @@
 
 module BranchSec(
     input Branch,
-    input signed [31:0] ALUOut,
     input [2:0] BranchSt,
-    output reg [1:0] PCSrc
+    input [31:0] Rs,
+    input [31:0] Rt,
+    output reg PCSrc
 );
 
 reg B_Zero;
+reg [31:0] ALUOut;
 
 always@(*) begin
     B_Zero = 0;
+    ALUOut = Rs - Rt;
     case (BranchSt)
         3'h0:       // bne
             if (ALUOut == 0)
@@ -42,12 +45,13 @@ always@(*) begin
                 B_Zero = 0;
             else
                 B_Zero = 1;
+	 endcase
 end
 
 always@(*) begin
     PCSrc = 0;
-    if(Branch and B_Zero)
-        PCSrc = 2'b01;
+    if(Branch && B_Zero)
+        PCSrc = 1;
 end
 
 endmodule

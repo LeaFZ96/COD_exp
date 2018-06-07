@@ -3,14 +3,11 @@
 module EX_MEM(
     input clk,
     input rst_n,
-    input flush,
     input MemtoReg_EX,
     input MemWrite_EX,
-    input MemRead_EX,
     input Branch_EX,
     input RegWrite_EX,
     input Zero_EX,
-    input Overflow_EX,
     input [2:0] BranchSt_EX,
     input [31:0] ALUOut_EX,
     input [31:0] ReadRt_EX,
@@ -18,11 +15,9 @@ module EX_MEM(
     input [4:0] WriteReg_EX,
     output reg MemtoReg_MEM,
     output reg MemWrite_MEM,
-    output reg MemRead_MEM,
     output reg Branch_MEM,
     output reg RegWrite_MEM,
     output reg Zero_MEM,
-    output reg Overflow_MEM,
     output reg [2:0] BranchSt_MEM,
     output reg [31:0] ALUOut_MEM,
     output reg [31:0] ReadRt_MEM,
@@ -31,10 +26,9 @@ module EX_MEM(
 );
 
 always@(posedge clk or negedge rst_n) begin
-    if(~rst_n || flush) begin
+    if(~rst_n) begin
         MemtoReg_MEM <= 0;
         MemWrite_MEM <= 0;
-        MemRead_MEM <= 0;
         Branch_MEM <= 0;
         RegWrite_MEM <= 0;
         Zero_MEM <= 0;
@@ -43,12 +37,10 @@ always@(posedge clk or negedge rst_n) begin
         ReadRt_MEM <= 0;
         PCBranch_MEM <= 0;
         WriteReg_MEM <= 0;
-        Overflow_MEM <= 0;
     end
     else begin
         MemtoReg_MEM <= MemtoReg_EX;
         MemWrite_MEM <= MemWrite_EX;
-        MemRead_MEM <= MemRead_EX;
         Branch_MEM <= Branch_EX;
         RegWrite_MEM <= RegWrite_EX;
         Zero_MEM <= Zero_EX;
@@ -57,7 +49,6 @@ always@(posedge clk or negedge rst_n) begin
         ReadRt_MEM <= ReadRt_EX;
         PCBranch_MEM <= PCBranch_EX;
         WriteReg_MEM <= WriteReg_EX; 
-        Overflow_MEM <= Overflow_EX;
     end
 end
 

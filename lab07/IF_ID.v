@@ -12,7 +12,7 @@ module IF_ID(
 );
 
 always@(posedge clk or negedge rst_n) begin
-    if(~rst_n or flush) begin
+    if(~rst_n || flush) begin
         PCPlus4_ID <= 0;
         Instr_ID <= 0;
     end

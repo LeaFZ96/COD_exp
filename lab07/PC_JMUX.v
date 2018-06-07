@@ -4,21 +4,22 @@ module PC_JMUX(
     input Jump,
     input JumpR,
     input [31:0] PCPlus4,
-    input [25:0] Instr,
+    input [27:0] Instr,
     input [31:0] Signimm,
     input [31:0] ReadRs_ID,
-    output reg PCSrc,
+    output reg PCJ,
     output reg [31:0] PCJOut
 );
 
 always@(*) begin
-    PCSrc = 0;
+    PCJ = 0;
     if(Jump) begin
-        PCSrc = 2'b10;
+        PCJ = 1;
         if(JumpR)
-            PCJOut = ReadRs_ID;
+            PCJOut = {2'b00, ReadRs_ID[31:2]};
         else
-            PCJOut = {PCPlus4[31:28], Instr, 2'b0};
+            PCJOut = {PCPlus4[31:28], Instr};
+	 end
 end
 
 endmodule

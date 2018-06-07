@@ -34,7 +34,7 @@ always@(opcode or funct) begin
 	case(opcode)
 		6'h0: begin
 			RegDst = 1;
-			RegWrite = 1；
+			RegWrite = 1;
 			case(funct)
 				6'h20: begin				// add
 					ALUControl = 4'h1;
@@ -93,7 +93,7 @@ always@(opcode or funct) begin
 		6'he: begin 	// xori
 			ALUSrc = 1;
 			RegWrite = 1;
-			ALUControl = 4'h5
+			ALUControl = 4'h5;
 		end
 		6'h23: begin 	// lw
 			MemRead = 1;

@@ -17,7 +17,8 @@ reg [159:0] PCH;
 always@(posedge clk or negedge rst_n) begin
     if(~rst_n)
         PCNext <= 0;
-    else if(~Stall) begin
+    else begin
+	if(~Stall) begin
         if(PCSrc == 2'b01)
             PCNext <= PCBOut;
         else if(PCSrc == 2'b10)
@@ -33,6 +34,7 @@ always@(posedge clk or negedge rst_n) begin
         PCNext <= 32'hffffffff;
     if(Continue)
         PCNext <= PCH[63:32];
+	end
 end
 
 endmodule

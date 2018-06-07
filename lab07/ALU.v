@@ -11,12 +11,12 @@ module ALU(
 );
 
 parameter A_NOP = 3'h00;
-parameter	A_ADD = 3'h01;
-parameter	A_SUB = 3'h02;
-parameter	A_AND = 3'h03;
-parameter	A_OR = 3'h04;
-parameter	A_XOR = 3'h05;
-parameter	A_NOR = 3'h06;
+parameter A_ADD = 3'h01;
+parameter A_SUB = 3'h02;
+parameter A_AND = 3'h03;
+parameter A_OR = 3'h04;
+parameter A_XOR = 3'h05;
+parameter A_NOR = 3'h06;
 parameter A_SLTU = 3'h07;
 parameter A_SLT = 3'h08;
 
@@ -39,11 +39,11 @@ always@(*) begin
         Zero = 0;
     case(ins)
         2'b01: begin    // add or addi
-            if(alu_a > 0 && alu_b > 0 && $signed(alu_o) < 0)
+            if(alu_a > 0 && alu_b > 0 && $signed(alu_out) < 0)
                 Overflow = 1;
         end
         2'b10: begin    // sub
-            if(alu_a > 0 && $signed(alu_b) < 0 && $signed(alu_o) < 0)
+            if(alu_a > 0 && $signed(alu_b) < 0 && $signed(alu_out) < 0)
                 Overflow = 1;
         end
         default: Overflow = 0;
