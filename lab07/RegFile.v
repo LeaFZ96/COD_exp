@@ -15,10 +15,10 @@ module RegFile(
 reg [31:0] data [0:31];
 integer i;
 
-assign rDout0 = data[rAddr0];
-assign rDout1 = data[rAddr1];
+assign rDout0 = rAddr0 ? ((RegWrite && rAddr0 == wAddr) ? wDin : data[rAddr0]) : 0;
+assign rDout1 = rAddr1 ? ((RegWrite && rAddr1 == wAddr) ? wDin : data[rAddr1]) : 0;
 
-always@(posedge clk or negedge rst_n) begin
+always@(negedge clk or negedge rst_n) begin
 	if(~rst_n) begin
 		for(i = 0; i < 32; i = i + 1)
 			data[i] <= 0;	

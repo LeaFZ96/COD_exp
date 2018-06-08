@@ -9,7 +9,7 @@ module BranchSec(
 );
 
 reg B_Zero;
-reg [31:0] ALUOut;
+reg signed [31:0] ALUOut;
 
 always@(*) begin
     B_Zero = 0;

@@ -13,27 +13,35 @@ module PC(
 );
 
 reg [159:0] PCH;
+reg StallSt;
 
 always@(posedge clk or negedge rst_n) begin
-    if(~rst_n)
+    if(~rst_n) begin
+		StallSt <= 0;
         PCNext <= 0;
+	end
     else begin
-	if(~Stall) begin
-        if(PCSrc == 2'b01)
-            PCNext <= PCBOut;
-        else if(PCSrc == 2'b10)
-            PCNext <= PCJOut;
-        else if(PCSrc == 2'b11)         // break
-            PCNext <= 32'hffffffff;
-        else
-            PCNext <= PCPlus4;
-        if(PCSrc != 2'b11)
-            PCH <= {PCH[127:0], PCNext};
-    end
-    if(PCSrc == 2'b11)
-        PCNext <= 32'hffffffff;
-    if(Continue)
-        PCNext <= PCH[63:32];
+		if(~Stall && ~StallSt) begin
+			if(PCSrc == 2'b01)
+				PCNext <= PCBOut;
+			else if(PCSrc == 2'b10)
+				PCNext <= PCJOut;
+			else if(PCSrc == 2'b11)         // break
+				PCNext <= 32'hffffffff;
+			else
+				PCNext <= PCPlus4;
+			if(PCSrc != 2'b11)
+				PCH <= {PCH[127:0], PCNext};
+		end
+		if(PCSrc == 2'b11) begin
+			PCNext <= 32'hffffffff;
+			PCH <= {PCH[127:0], PCNext};
+			StallSt <= 1;
+		end
+		if(Continue) begin
+			PCNext <= PCH[31:0];
+			StallSt <= 0;
+		end
 	end
 end
 

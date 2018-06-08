@@ -12,7 +12,7 @@ module MEM_WB(
     output reg MemtoReg_WB,
     output reg [31:0] ReadData_WB,
     output reg [31:0] ALUOut_WB,
-    output reg [4:0] WriteReg_WB,
+    output reg [4:0] WriteReg_WB
 );
 
 always@(posedge clk or negedge rst_n) begin
